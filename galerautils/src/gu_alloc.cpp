@@ -27,10 +27,13 @@ gu::Allocator::HeapStore::my_new_page (page_size_type const size)
     if (gu_likely(size <= left_))
     {
         /* to avoid too frequent allocation, make it (at least) 64K */
-        static page_size_type const PAGE_SIZE(gu_page_size_multiple(1 << 16));
+//       static page_size_type const PAGE_SIZE(gu_page_size_multiple(1 << 16));
+        page_size_type largesize = gu_page_size_multiple(1 << 16);
 
+//        page_size_type const page_size
+//           (std::min(std::max(size, PAGE_SIZE), left_));
         page_size_type const page_size
-            (std::min(std::max(size, PAGE_SIZE), left_));
+            (std::min(std::max(size, largesize), left_));
 
         Page* ret = new HeapPage (page_size);
 
@@ -42,6 +45,8 @@ gu::Allocator::HeapStore::my_new_page (page_size_type const size)
     }
 
     gu_throw_error (ENOMEM) << "out of memory in RAM pool";
+
+	return 0; // to shut up compiler
 }
 
 

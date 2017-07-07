@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export ROOT=$PWD/..
+
+docker build -t builder builder
+docker run -t --rm -v $ROOT:/src builder
+
+cp $ROOT/libgalera_smm.so maria
+
+docker build -t maria maria

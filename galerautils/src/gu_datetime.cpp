@@ -11,6 +11,7 @@
 extern "C"
 {
 #include "gu_time.h"
+#include "stdint.h"
 }
 
 std::ostream& gu::datetime::operator<<(std::ostream& os, const Date& d)
